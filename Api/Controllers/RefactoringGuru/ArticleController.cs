@@ -1,6 +1,7 @@
 ﻿using Application.Domain.RefactoringGuru.Articles.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using PagesResponse;
 
 namespace Api.Controllers.RefactoringGuru;
 
@@ -10,12 +11,15 @@ public class ArticleController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> GetAllArticles(
-        [FromQuery] int page = 1,
-        [FromQuery] int pageSize = 10,
+        [FromQuery] int page,
+        [FromQuery] int pageSize,
+        [FromQuery] string sortField,
+        [FromQuery] string sortDirection = SortDirections.Ascending,
         CancellationToken cancellationToken = default)
     {
         var articles = 
-            await mediator.Send(new GetArticlesQuery(page, pageSize), cancellationToken);
+            await mediator.Send(new GetArticlesQuery(page, pageSize, new SortOptions(sortField, sortDirection)), 
+                cancellationToken);
 
         return Ok(articles);
     }
