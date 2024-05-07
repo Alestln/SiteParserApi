@@ -1,4 +1,4 @@
-﻿using Application.Domain.RefactoringGuru.Articles.Queries;
+﻿using Application.Domain.RefactoringGuru.Articles.Queries.GetArticleList;
 using AutoMapper;
 using Core.Domain.RefactoringGuru.Models;
 

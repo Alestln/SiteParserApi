@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using PagesResponse;
 using Persistence.Contexts;
 
-namespace Application.Domain.RefactoringGuru.Articles.Queries;
+namespace Application.Domain.RefactoringGuru.Articles.Queries.GetArticleList;
 
 public class GetArticlesQueryHander(RefactoringGuruDbContext context, IMapper mapper) 
     : IRequestHandler<GetArticlesQuery, PageResponse<ArticleDto[]>>

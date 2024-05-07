@@ -1,4 +1,4 @@
-﻿namespace Application.Domain.RefactoringGuru.Articles.Queries;
+﻿namespace Application.Domain.RefactoringGuru.Articles.Queries.GetArticleList;
 
 public record ArticleDto
 {
