@@ -1,4 +1,5 @@
-﻿using Application.Domain.RefactoringGuru.Articles.Queries.GetArticleList;
+﻿using System.ComponentModel.DataAnnotations;
+using Application.Domain.RefactoringGuru.Articles.Queries.GetArticleList;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using PagesResponse;
@@ -11,8 +12,8 @@ public class ArticleController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
     public async Task<IActionResult> List(
-        [FromQuery] int page,
-        [FromQuery] int pageSize,
+        [Required] [FromQuery] int page,
+        [Required] [FromQuery] int pageSize,
         [FromQuery] string sortField,
         [FromQuery] string sortDirection = SortDirections.Ascending,
         CancellationToken cancellationToken = default)
