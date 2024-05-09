@@ -7,23 +7,40 @@ namespace Persistence;
 
 public static class PersistenceRegistration
 {
-    private const string ConnectionStringName = "SiteParser";
+    private const string SiteParserConnectionStringName = "SiteParser";
+    private const string NasaLogConnectionStringName = "Nasa";
 
     public static void AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString(ConnectionStringName)
+        var siteParserConnectionString = configuration.GetConnectionString(SiteParserConnectionStringName)
                                ?? throw new AggregateException(
-                                   $"Connection string '{ConnectionStringName}' is not found in configurations.");
+                                   $"Connection string '{SiteParserConnectionStringName}' is not found in configurations.");
         
         services.AddDbContext<RefactoringGuruDbContext>(options =>
         {
             options.UseNpgsql(
-                connectionString,
+                siteParserConnectionString,
                 npgsqlOptions =>
                 {
                     npgsqlOptions.MigrationsHistoryTable(
                         RefactoringGuruDbContext.DbMigrationsHistoryTable,
                         RefactoringGuruDbContext.DbSchema);
+                });
+        });
+        
+        var nasaLogConnectionString = configuration.GetConnectionString(NasaLogConnectionStringName)
+                                      ?? throw new AggregateException(
+                                          $"Connection string '{NasaLogConnectionStringName}' is not found in configurations.");
+
+        services.AddDbContext<NasaLogDbContext>(options =>
+        {
+            options.UseNpgsql(
+                nasaLogConnectionString,
+                npgsqlOptions =>
+                {
+                    npgsqlOptions.MigrationsHistoryTable(
+                        NasaLogDbContext.DbMigrationsHistoryTable,
+                        NasaLogDbContext.DbSchema);
                 });
         });
     }
